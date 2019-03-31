@@ -1,0 +1,60 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Labyrint",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig5.Labyrint",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Legesystem",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig4.Legesystem",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestSkrivResept",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig4.TestSkrivResept",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestIterator",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig4.TestIterator",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestLenkeliste",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig3.TestLenkeliste",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig2.Main",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Hovedprogram",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig1.Hovedprogram",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Test",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig3.Test",
+            "projectName": "me.frikk.obliger"
+        }
+    ]
+}
