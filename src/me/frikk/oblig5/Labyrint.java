@@ -3,7 +3,6 @@ package me.frikk.oblig5;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-//import java.util.stream.*;
 import java.util.stream.Collectors;
 
 class Labyrint {
@@ -62,14 +61,14 @@ class Labyrint {
             return stringListe;
         }
 
-        startRute.gaa();
+        //startRute.gaa();
         startRute.finnUtvei();
 
-        startRute.losninger.stream()
-            .map(losning -> losning.stream()
-                .map(rute -> String.format("(%s, %s)", rute.kolonne, rute.rad))
-                .collect(Collectors.joining(" --> ")))
-            .forEach(stringListe::leggTil);
+        startRute.losninger.stream()                                                // Stream av denne rutens løsninger (liste av liste)
+            .map(losning -> losning.stream()                                        // henter stream av løsninger i løsninger, og bruker funksjonen på disse
+                .map(rute -> String.format("(%s, %s)", rute.kolonne, rute.rad))     // Gjør om hver rute i løsningen til en streng med koordinater
+                .collect(Collectors.joining(" --> ")))                              // legger sammen strengene med pil mellom
+            .forEach(stringListe::leggTil);                                         // legger til alle disse i en lenketliste
 
         return stringListe;
     }
@@ -113,7 +112,6 @@ class Labyrint {
         }
         scanner.close();
         
-        
         Labyrint labyrint = new Labyrint(ruter, rader, kolonner);
         labyrint.settNaboer();
 
@@ -128,8 +126,8 @@ class Labyrint {
         for (int rad = 0; rad < rader; rad++) {
             for (int kolonne = 0; kolonne < kolonner; kolonne++) {
                 Rute rute = labyrint[rad][kolonne];
-                Rute[][] labyrint = this.labyrint;
                 rute.settLabyrint(this);
+
                 if (rad < rader - 1) {
                     rute.settSyd(labyrint[rad + 1][kolonne]);
                 }

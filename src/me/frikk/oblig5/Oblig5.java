@@ -40,9 +40,9 @@ class Oblig5 {
                 if (utveier.stoerrelse() != 0) {
                     for (String s : utveier) {
                         System.out.println(s + "\n");
-                        /* if (s.length() < kortesteVei.length()) {
+                        if (s.length() < kortesteVei.length()) {
                             kortesteVei = s;
-                        } */
+                        }
                     }
                     System.out.println("Korteste vei: \n" + kortesteVei + "\nAntall utveier: " + utveier.stoerrelse());
                 } else {

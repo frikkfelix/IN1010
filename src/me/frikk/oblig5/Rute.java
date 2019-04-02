@@ -13,10 +13,8 @@ abstract class Rute {
     protected Labyrint labyrint;
     protected boolean erUtvei = false;
     protected boolean sort;
-    protected boolean besokt;
-    public List<List<Rute>> losninger = new ArrayList<>();
-    // public Liste<String> losninger  = new Lenkeliste<String>();
 
+    public List<List<Rute>> losninger = new ArrayList<>();
     private List<Rute> naboTilUtvei;
     
     protected Rute nord;
@@ -33,27 +31,22 @@ abstract class Rute {
 
     public void settNord(Rute nord) {
         this.nord = nord;
-        return;
     }
 
     public void settSyd(Rute syd) {
         this.syd = syd;
-        return;
     }
 
     public void settVest(Rute vest) {
         this.vest = vest;
-        return;
     }
 
     public void settOest(Rute oest) {
         this.oest = oest;
-        return;
     }
 
     public void settLabyrint(Labyrint labyrint) {
         this.labyrint = labyrint;
-        return;
     }
 
     public List<Rute> hentNaboer() {
@@ -90,7 +83,7 @@ abstract class Rute {
      * Metoden returnerer true hvis den kommer til en utvei
      * 
      * 
-     * @param path
+     * @param sti Liste med ruter man har vært innom før nåværende rute
      * @return
      */
     public boolean gaa(List<Rute> sti) {
@@ -103,27 +96,28 @@ abstract class Rute {
         if (this.naboTilUtvei == null) {
             ArrayList<Rute> nySti = new ArrayList<Rute>(sti);
             nySti.add(this);
-            this.naboTilUtvei = hentNaboer().stream()
-                .filter(nabo -> !sti.contains(nabo) && !nabo.sort)
-                .filter(nabo -> nabo.gaa(nySti))
-                .collect(Collectors.toList());
+            this.naboTilUtvei = hentNaboer().stream()               // henter en stream av denne rutens naboer
+                .filter(nabo -> !sti.contains(nabo) && !nabo.sort)  // filtrerer ut svarte og tidligere besøkte naboer 
+                .filter(nabo -> nabo.gaa(nySti))                    // filtrerer ut naboene som ikke leder til en utvei
+                .collect(Collectors.toList());                      // samler alle naboene som leder til en utvei i listen
         }
         //System.out.println(this);
         //System.out.println(naboTilUtvei);
-        return this.naboTilUtvei.size() > 0;
+        return this.naboTilUtvei.size() > 0;                        // returnerer true hvis ruten har naboer som fører til en utvei
     }
 
     public void finnUtvei() {
+        gaa();
         if (this.erUtvei) {
-            this.losninger.add(Collections.singletonList(this));
+            this.losninger.add(Collections.singletonList(this));    // hvis vi allerede er på en utvei legges denne ruten til i løsninger
         } else {
-            this.naboTilUtvei.stream().forEach(nabo -> {
-                nabo.finnUtvei();
-                this.losninger.addAll(nabo.losninger.stream().map(loesning -> {
-                    List<Rute> nyLoesning = new ArrayList<>(loesning);
-                    nyLoesning.add(0, this);
+            this.naboTilUtvei.stream().forEach(nabo -> {            // henter en stream av rutens naboer som leder til en utvei
+                nabo.finnUtvei();                                   // rekursivt kall på alle naboer som leder til utvei
+                this.losninger.addAll(nabo.losninger.stream().map(loesning -> { // Gjør løsning om til nyLøsning som defineres i lambda-funksjonen
+                    List<Rute> nyLoesning = new ArrayList<>(loesning);          // oppretter ny løsning 
+                    nyLoesning.add(0, this);                                    // legger til denne ruten på begynnelsen av listen
                     return nyLoesning;
-                }).collect(Collectors.toList()));
+                }).collect(Collectors.toList()));                               // legger til alle løsninger i denne rutens liste av løsninger
             });
         }
     }
