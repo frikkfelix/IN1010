@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 //import java.util.stream.*;
+import java.util.stream.Collectors;
 
 class Labyrint {
     protected Rute[][] labyrint;
+    protected ArrayList<Rute> besokt = new ArrayList<>();
 
     protected int kolonner;
     protected int rader;
@@ -20,15 +22,56 @@ class Labyrint {
     public static void main(String[] args) {
         Labyrint labyrint;
         try {
-            labyrint = Labyrint.lesFraFil(new File("/Users/frikk/Documents/2.semester/IN1010/JavaProjects/me.frikk.obliger/src/me/frikk/oblig5/3.in"));
+            labyrint = Labyrint.lesFraFil(new File("/Users/frikk/Documents/2.semester/IN1010/JavaProjects/me.frikk.obliger/src/me/frikk/oblig5/5.in"));
             System.out.println(labyrint);
-            Rute rute = labyrint.labyrint[7][1];
+            
 
-            rute.gaa();
+            Liste<String> los = labyrint.finnUtveiFra(2, 73);
+
+            //los.stream().forEach(l -> System.out.println(l));
+            for (String string : los) {
+                System.out.println(string);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /* public List<String> finnUtveiFra(int kolonne, int rad) {
+        Rute startRute = this.labyrint[rad][kolonne];
+        startRute.gaa();
+        startRute.finnUtvei();
+
+        if(startRute.losninger.size() == 0) {
+            return Collections.singletonList("Ingen løsninger");
+        }
+        return startRute.losninger.stream()
+            .map(losning -> losning.stream()
+                .map(rute -> String.format("(%s, %s)", rute.kolonne + 1, rute.rad + 1))
+                .collect(Collectors.joining(" --> ")))
+            .collect(Collectors.toList());
+    } */
+
+    public Liste<String> finnUtveiFra(int kolonne, int rad) {
+        Rute startRute = this.labyrint[rad][kolonne];
+        Liste<String> stringListe = new Lenkeliste<>();
+
+        if (startRute.sort) {
+            return stringListe;
+        }
+
+        startRute.gaa();
+        startRute.finnUtvei();
+
+        startRute.losninger.stream()
+            .map(losning -> losning.stream()
+                .map(rute -> String.format("(%s, %s)", rute.kolonne, rute.rad))
+                .collect(Collectors.joining(" --> ")))
+            .forEach(stringListe::leggTil);
+
+        return stringListe;
     }
 
     public String toString() {
@@ -78,7 +121,7 @@ class Labyrint {
     }
 
     public static boolean erAapning(int rad, int kolonne, int rader, int kolonner) {
-        return ((rad == 0 || kolonne == 0) || (rad == rader - 1 || kolonne == kolonner - 1));
+        return (rad == 0 || kolonne == 0 || rad == rader - 1 || kolonne == kolonner - 1);
     }
 
     public void settNaboer() {

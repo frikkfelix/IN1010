@@ -1,6 +1,11 @@
 package me.frikk.oblig5;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 abstract class Rute {
     protected int kolonne;
@@ -9,19 +14,15 @@ abstract class Rute {
     protected boolean erUtvei = false;
     protected boolean sort;
     protected boolean besokt;
+    public List<List<Rute>> losninger = new ArrayList<>();
+    // public Liste<String> losninger  = new Lenkeliste<String>();
 
-    protected boolean fraSyd = false;
-    protected boolean fraNord = false;
-    protected boolean fraOest = false;
-    protected boolean fraVest = false;
+    private List<Rute> naboTilUtvei;
     
     protected Rute nord;
     protected Rute syd;
     protected Rute vest;
     protected Rute oest;
-    protected Rute forrige;
-
-
 
     public Rute(int rad, int kolonne) {
         this.rad = rad;   
@@ -55,36 +56,75 @@ abstract class Rute {
         return;
     }
 
-    public ArrayList<Rute> hentNaboer() {
-        ArrayList<Rute> naboer = new ArrayList<Rute>();
-        if (nord != null) {naboer.add(nord);}
-        if (syd != null) {naboer.add(syd);}
-        if (oest != null) {naboer.add(oest);}
-        if (vest != null) {naboer.add(vest);}
-        return naboer;
+    public List<Rute> hentNaboer() {
+        return Stream.of(nord, syd, oest, vest)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
-        return String.format("rad: %d, kolonne: %d", rad + 1, kolonne + 1);
+        return String.format("rad: %d, kolonne: %d", rad, kolonne);
     }
 
-    public void gaa() {
-        besokt = true;
+    /* public boolean gaa(Rute forrige) {
         if (erUtvei) {
             System.out.println("Fant en utvei!");
-            return;
+            return true;
         }
         for (Rute nabo : hentNaboer()) {
-            if (!nabo.sort && !nabo.besokt) {
+            if (!nabo.sort && !nabo.equals(forrige)) {
                 System.out.println(nabo);
-                nabo.gaa();
+                nabo.gaa(this);
             }
-        }        
+        }
+        return false;        
+    } */
+
+    public boolean gaa() {
+        return gaa(Collections.emptyList());
     }
 
+    /**
+     * Hver rute har en nabo til utvei liste
+     * Metoden returnerer true hvis den kommer til en utvei
+     * 
+     * 
+     * @param path
+     * @return
+     */
+    public boolean gaa(List<Rute> sti) {
+        if (this.erUtvei) {
+            //System.out.println(this);
+            //System.out.println("Fant en utvei");
+            return true;
+        }
+
+        if (this.naboTilUtvei == null) {
+            ArrayList<Rute> nySti = new ArrayList<Rute>(sti);
+            nySti.add(this);
+            this.naboTilUtvei = hentNaboer().stream()
+                .filter(nabo -> !sti.contains(nabo) && !nabo.sort)
+                .filter(nabo -> nabo.gaa(nySti))
+                .collect(Collectors.toList());
+        }
+        //System.out.println(this);
+        //System.out.println(naboTilUtvei);
+        return this.naboTilUtvei.size() > 0;
+    }
 
     public void finnUtvei() {
-        gaa();
+        if (this.erUtvei) {
+            this.losninger.add(Collections.singletonList(this));
+        } else {
+            this.naboTilUtvei.stream().forEach(nabo -> {
+                nabo.finnUtvei();
+                this.losninger.addAll(nabo.losninger.stream().map(loesning -> {
+                    List<Rute> nyLoesning = new ArrayList<>(loesning);
+                    nyLoesning.add(0, this);
+                    return nyLoesning;
+                }).collect(Collectors.toList()));
+            });
+        }
     }
 }

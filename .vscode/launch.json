@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Oblig5",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig5.Oblig5",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Labyrint",
             "request": "launch",
             "mainClass": "me.frikk.oblig5.Labyrint",
