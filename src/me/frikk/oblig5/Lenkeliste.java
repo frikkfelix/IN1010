@@ -169,4 +169,16 @@ class Lenkeliste<T> implements Liste<T> {
         return node;
     }
 
+    @Override
+    public boolean inneholder(T x) {
+        Node node = start;
+        for (int i = 0; i < stoerrelse; i++) {
+            if (node.data.equals(x)) {
+                return true;
+            }
+            node = node.neste;
+        }
+        return false;
+    }
+
 }

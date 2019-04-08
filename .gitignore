@@ -23,5 +23,6 @@
 hs_err_pid*
 
 /bin
+src/me/frikk/oblig5streams/
 
 .DS_Store

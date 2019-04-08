@@ -23,7 +23,7 @@ class Oblig5 {
             System.out.printf("FEIL: Kunne ikke lese fra '%s'\n", filnavn);
             System.exit(1);
         }
-
+        System.out.println(l);
         // les start-koordinater fra standard input
         Scanner inn = new Scanner(System.in);
         System.out.println("Skriv inn koordinater <kolonne> <rad> ('a' for aa avslutte)");
@@ -33,11 +33,12 @@ class Oblig5 {
             try {
                 int startKol = Integer.parseInt(ord[0]);
                 int startRad = Integer.parseInt(ord[1]);
+                long start = System.nanoTime();
                 
                 Liste<String> utveier = l.finnUtveiFra(startKol, startRad);
-                String kortesteVei = utveier.hent(0);
-
+                
                 if (utveier.stoerrelse() != 0) {
+                    String kortesteVei = utveier.hent(0);
                     for (String s : utveier) {
                         System.out.println(s + "\n");
                         if (s.length() < kortesteVei.length()) {
@@ -48,6 +49,10 @@ class Oblig5 {
                 } else {
                     System.out.println("Ingen utveier.");
                 }
+                long slutt = System.nanoTime();
+                // Måler hvor lang tid det tok å finne og skrive ut utveiene
+                long tidsforbruk = slutt - start;
+                System.out.println("Tidsforbruk: " + tidsforbruk/1000000 + " ms");
                 System.out.println();
             } catch (NumberFormatException e) {
                 System.out.println("Ugyldig input!");

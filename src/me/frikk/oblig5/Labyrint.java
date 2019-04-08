@@ -3,76 +3,39 @@ package me.frikk.oblig5;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Labyrint {
-    protected Rute[][] labyrint;
-    protected ArrayList<Rute> besokt = new ArrayList<>();
+    private Rute[][] labyrint;
+    private int kolonner;
+    private int rader;
 
-    protected int kolonner;
-    protected int rader;
-
-    private Labyrint(Rute[][] ruter, int rader, int kolonner) {
-        labyrint = ruter;
+    private Labyrint(Rute[][] labyrint, int rader, int kolonner) {
+        this.labyrint = labyrint;
         this.rader = rader;
         this.kolonner = kolonner;
     }
 
-    public static void main(String[] args) {
-        Labyrint labyrint;
-        try {
-            labyrint = Labyrint.lesFraFil(new File("/Users/frikk/Documents/2.semester/IN1010/JavaProjects/me.frikk.obliger/src/me/frikk/oblig5/5.in"));
-            System.out.println(labyrint);
-            
-
-            Liste<String> los = labyrint.finnUtveiFra(2, 73);
-
-            //los.stream().forEach(l -> System.out.println(l));
-            for (String string : los) {
-                System.out.println(string);
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /* public List<String> finnUtveiFra(int kolonne, int rad) {
-        Rute startRute = this.labyrint[rad][kolonne];
-        startRute.gaa();
-        startRute.finnUtvei();
-
-        if(startRute.losninger.size() == 0) {
-            return Collections.singletonList("Ingen løsninger");
-        }
-        return startRute.losninger.stream()
-            .map(losning -> losning.stream()
-                .map(rute -> String.format("(%s, %s)", rute.kolonne + 1, rute.rad + 1))
-                .collect(Collectors.joining(" --> ")))
-            .collect(Collectors.toList());
-    } */
-
+    /**
+     * Finner alle utveiene fra en gitt rute vha. kall på finnUtvei
+     * @param kolonne
+     * @param rad
+     * @return liste av strenger med alle stiene til alle utveiene fra startruten
+     */
     public Liste<String> finnUtveiFra(int kolonne, int rad) {
-        Rute startRute = this.labyrint[rad][kolonne];
-        Liste<String> stringListe = new Lenkeliste<>();
-
-        if (startRute.sort) {
-            return stringListe;
+        // Returnerer tom liste dersom koordinatene er utenfor rekkevidde
+        if (kolonne >= kolonner || rad >= rader) {
+            return new Lenkeliste<>();
         }
-
-        //startRute.gaa();
+        Rute startRute = this.labyrint[rad][kolonne];
+        startRute.losninger = new Lenkeliste<>();
         startRute.finnUtvei();
 
-        startRute.losninger.stream()                                                // Stream av denne rutens løsninger (liste av liste)
-            .map(losning -> losning.stream()                                        // henter stream av løsninger i løsninger, og bruker funksjonen på disse
-                .map(rute -> String.format("(%s, %s)", rute.kolonne, rute.rad))     // Gjør om hver rute i løsningen til en streng med koordinater
-                .collect(Collectors.joining(" --> ")))                              // legger sammen strengene med pil mellom
-            .forEach(stringListe::leggTil);                                         // legger til alle disse i en lenketliste
-
-        return stringListe;
+        return startRute.losninger;
     }
 
+    /**
+     * @return string-representasjon av 2d-arrayet til labyrinten
+     */
     public String toString() {
         StringBuilder string = new StringBuilder();
         for (Rute[] ruteArray : labyrint) {
@@ -84,6 +47,13 @@ class Labyrint {
         return string.toString();      
     }
 
+    /**
+     * Static factory-metode som leser en fil og oppretter et labyrintobjekt
+     * Setter alle ruter sine naboer
+     * @param fil
+     * @return labyrint-objekt
+     * @throws FileNotFoundException
+     */
     static Labyrint lesFraFil(File fil) throws FileNotFoundException {
         Scanner scanner = new Scanner(fil);
         
@@ -122,6 +92,9 @@ class Labyrint {
         return (rad == 0 || kolonne == 0 || rad == rader - 1 || kolonne == kolonner - 1);
     }
 
+    /**
+     * Setter alle rutene i labyrinten sine naboer
+     */
     public void settNaboer() {
         for (int rad = 0; rad < rader; rad++) {
             for (int kolonne = 0; kolonne < kolonner; kolonne++) {
