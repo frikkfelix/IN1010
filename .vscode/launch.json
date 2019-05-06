@@ -2,6 +2,55 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Hovedprogram",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig6.Hovedprogram",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Hovedprogram",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig7.Hovedprogram",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Hovedprogram",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig6take3.Hovedprogram",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Test",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig6take2.Test",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Hovedprogram",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig6take2.Hovedprogram",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Hovedprogram",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig6.Hovedprogram",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GenererLabyrint",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig5.GenererLabyrint",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TestLL",
             "request": "launch",
             "mainClass": "me.frikk.oblig5.TestLL",
