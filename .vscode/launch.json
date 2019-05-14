@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MazeSolver",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig8.MazeSolver",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MazeSolver",
+            "request": "launch",
+            "mainClass": "me.frikk.oblig7.MazeSolver",
+            "projectName": "me.frikk.obliger"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Hovedprogram",
             "request": "launch",
             "mainClass": "me.frikk.oblig6.Hovedprogram",
