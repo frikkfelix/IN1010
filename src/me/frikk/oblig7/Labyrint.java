@@ -1,14 +1,13 @@
 package me.frikk.oblig7;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import javafx.scene.paint.Color;
-
 class Labyrint {
-    private Rute[][] labyrint;
-    private int kolonner;
-    private int rader;
+    private final Rute[][] labyrint;
+    public final int kolonner;
+    public final int rader;
 
     private Labyrint(Rute[][] labyrint, int rader, int kolonner) {
         this.labyrint = labyrint;
@@ -120,15 +119,5 @@ class Labyrint {
 
     public Rute[][] hentRuter() {
         return labyrint;
-    }
-
-    public void nullstillBrett() {
-        for (int rad = 0; rad < rader; rad++) {
-            for (int kolonne = 0; kolonne < kolonner; kolonne++) {
-                if (labyrint[rad][kolonne] instanceof HvitRute) {
-                    labyrint[rad][kolonne].setFill(Color.WHITE);
-                }
-            }
-        }
     }
 }

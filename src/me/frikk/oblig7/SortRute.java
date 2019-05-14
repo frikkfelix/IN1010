@@ -1,11 +1,10 @@
 package me.frikk.oblig7;
-import java.util.List;
 
-import javafx.scene.paint.Color;
+import java.util.List;
 
 class SortRute extends Rute {
     public SortRute(int rad, int kolonne) {
-        super(rad, kolonne, Color.BLACK);
+        super(rad, kolonne);
     }
 
     @Override
@@ -16,11 +15,6 @@ class SortRute extends Rute {
     @Override
     public void gaa(List<Rute> besoekteRuter) {
         // Kan ikke gå på sorte ruter, returnerer derfor uten å gjøre noe
-        return;
-    }
-
-    @Override
-    public void klikk() {
         return;
     }
 }

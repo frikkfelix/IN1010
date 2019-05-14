@@ -1,16 +1,11 @@
-package me.frikk.oblig7;
-
-import java.util.Collections;
+package me.frikk.oblig7;import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
 
-
-abstract class Rute extends Rectangle {
+abstract class Rute {
     protected int kolonne;
     protected int rad;
     protected Labyrint labyrint;
@@ -21,9 +16,7 @@ abstract class Rute extends Rectangle {
     private Rute vest;
     private Rute oest;
 
-    public Rute(int rad, int kolonne, Color farge) {
-        super(30, 30, farge);
-        setOnMouseClicked(e -> klikk());
+    public Rute(int rad, int kolonne) {
         this.rad = rad;
         this.kolonne = kolonne;
     }
@@ -64,8 +57,6 @@ abstract class Rute extends Rectangle {
      * @param sti string som inneholder koordinatene til rutene på stien
      */
     public abstract void gaa(List<Rute> besoekteRuter);
-
-    public abstract void klikk();
 
     public void finnUtvei() {
         gaa(Collections.emptyList());

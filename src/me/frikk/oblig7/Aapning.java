@@ -1,4 +1,5 @@
 package me.frikk.oblig7;
+import java.util.ArrayList;
 import java.util.List;
 
 class Aapning extends HvitRute {
@@ -9,13 +10,15 @@ class Aapning extends HvitRute {
     @Override
     public void gaa(List<Rute> besoekteRuter) {
         Rute startRute;
-        if (besoekteRuter.isEmpty()){
+        ArrayList<Rute> oppdatertBesoekteRuter = new ArrayList<Rute>(besoekteRuter);
+        oppdatertBesoekteRuter.add(this);
+
+        if (oppdatertBesoekteRuter.size() == 1){
             startRute = this;
         } else {
-            startRute = besoekteRuter.get(0);
-            besoekteRuter.add(this);
+            startRute = oppdatertBesoekteRuter.get(0);
         }
-        startRute.losninger.add(besoekteRuter);
+        startRute.losninger.add(oppdatertBesoekteRuter);
     }
 
     @Override
